@@ -22,10 +22,10 @@ namespace Dog_Class
 		Vector3 newPos = new Vector3();
 
 		// Constructor
-		public Dog_Class_RC3(string _breed , int _lifeSpan)
+		public Dog_Class_RC3(string _breed , int _age)
 		{
 			breed = _breed;
-			lifeSpan = _lifeSpan;
+			lifeSpan = _age;
 			minimumHeight = 0.9f;
 			height = ((lifeSpan /0.2f) + minimumHeight);
 			//Intiate geometery
@@ -35,8 +35,8 @@ namespace Dog_Class
 			newPos = new Vector3(0, 0, lifeSpan * 2) + currentPos;
 			Dog.transform.position = newPos;
 			Dog.transform.localScale = new Vector3(Dog.transform.localScale.x * this.height/10,
-													 Dog.transform.localScale.y * this.height/10,
-													 Dog.transform.localScale.z * (this.height/20));
+												   Dog.transform.localScale.y * this.height/10,
+												   Dog.transform.localScale.z * (this.height/20));
 		}
 		//Behaviour
 		public String getBreed()
