@@ -15,16 +15,6 @@ public class Session3Homework : MonoBehaviour
     public int posX = 0;
 
 
-
-
-    private void Awake()
-    {
-
-        
-        
-
-    }
-
     // Start is called before the first frame update
     void Start()
     {
