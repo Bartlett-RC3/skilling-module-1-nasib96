@@ -70,7 +70,7 @@ public class lasserScript : MonoBehaviour
             }
             else
             {
-                gameEnd.text = " You Loose! ";
+                gameEnd.text = " You Lose! ";
             }
         }
         else
