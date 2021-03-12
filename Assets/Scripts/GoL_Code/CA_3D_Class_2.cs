@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CA_3D_Class_2 : MonoBehaviour {
+public class CA_3D_Class_2 : MonoBehaviour 
+{
 
     // Variables
     public Texture2D seedImage;
@@ -20,8 +21,14 @@ public class CA_3D_Class_2 : MonoBehaviour {
     public int correctPopulation = 2;
     public int birthPopulation = 2;
 
-	// Use this for initialization
-	void Start () 
+    public bool optionOne;
+    public bool optionTwo;
+    public bool optionThree;
+
+    private int[,] ageOfCells;  // added
+
+    // Use this for initialization
+    void Start () 
     {
         stack = new GameObject[columns, rows, height];
         CreateLayer();
@@ -46,19 +53,50 @@ public class CA_3D_Class_2 : MonoBehaviour {
         }
         */
 
-        if(currentHeight > height/3 && currentHeight <= height )
+        //Homework
+        if (optionOne == true)
         {
-            correctPopulation++;
-            if (currentHeight > height / 2)
+            if (currentHeight > height / 3 && currentHeight <= height)
             {
-                overPopulation--;
-
-                if (overPopulation > 5)
+                correctPopulation++;
+                if (currentHeight > height / 2)
                 {
-                    birthPopulation = 2;
+                    overPopulation--;
+
+                    if (overPopulation > 5)
+                    {
+                        birthPopulation = 2;
+                    }
                 }
             }
-        }      
+        }
+
+        if (optionTwo == true)
+        {
+            if (currentHeight > height / 2)
+            {
+                if (currentHeight > height / 2)
+                {
+                    overPopulation = overPopulation * 2;
+                    birthPopulation = 5;
+                }
+            }
+        }
+
+        if (optionThree)
+        {
+            if (alive > 100)
+            {
+                overPopulation++;
+            }
+        }
+
+        if (optionOne && optionTwo || optionOne && optionThree || optionThree && optionTwo || optionTwo && optionThree && optionOne)
+        {
+            Debug.Log("Choose any one option");
+            //Proceeds with the normal version
+        }
+
     }
 
     // Function to save a computed layer
@@ -66,8 +104,10 @@ public class CA_3D_Class_2 : MonoBehaviour {
         string LayerName = "layer" + currentHeight.ToString();
         GameObject currentLayer = new GameObject(LayerName);
 
-        for (int i = 0; i < columns; i++){
-            for (int j = 0; j < rows; j++){
+        for (int i = 0; i < columns; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
                 GameObject computedCube = layer[i, j];
 
                 Vector3 computedCubePos = new Vector3(i, currentHeight, j);
@@ -85,7 +125,8 @@ public class CA_3D_Class_2 : MonoBehaviour {
     }
 
     // Function to compute a new layer
-    private void UpdateLayer(){
+    private void UpdateLayer()
+    {
         // Assume all cells are dead at begining of frame
         alive = 0;
 
@@ -98,7 +139,7 @@ public class CA_3D_Class_2 : MonoBehaviour {
                 GameObject currentCube = layer[i, j];
                 int currentCubeState = currentCube.GetComponent<CA_Cube_Class_2>().GetState();
                 int aliveNeighbours = 0;
-                int currentCubeFutureState = 0;
+                //int currentCubeFutureState = 0;
 
                 int futureState = 0; //Added
 
@@ -180,6 +221,7 @@ public class CA_3D_Class_2 : MonoBehaviour {
                         layer[i, j].GetComponent<CA_Cube_Class_2>().SetFutureState(0);
                         futureState = 0;
                     }
+
                 }
 
                 // Rules 2: if cell is dead
@@ -189,6 +231,7 @@ public class CA_3D_Class_2 : MonoBehaviour {
                     {
                         layer[i, j].GetComponent<CA_Cube_Class_2>().SetFutureState(1);
                         futureState = 1;
+
                     }
                 }
 
@@ -218,7 +261,8 @@ public class CA_3D_Class_2 : MonoBehaviour {
     }
 
     // Helper function telling the user how many cells are alive
-    public int GetAlive(){
+    public int GetAlive()
+    {
         return alive;
     }
 }

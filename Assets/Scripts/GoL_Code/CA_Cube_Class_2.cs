@@ -9,31 +9,14 @@ public class CA_Cube_Class_2 : MonoBehaviour {
     private int futureState = 0;
     public bool computed = false;
 
-    //Added
-    private float _colorValue;
-    IEnumerator ageEvaluvator;
-    private Color props;
 
     public void Start() // Added
     {
-        ageEvaluvator = colorValue();
         //cellcurrentState = GameObject.Find("caGrid").GetComponent<CA_3D_Class_2>().;
     }
     // Update is called once per frame
     void Update () 
     {
-        props = new Color (_colorValue, 0, _colorValue);// Added
-
-        if (state >=1)  // Added
-        {
-            StartCoroutine(ageEvaluvator);
-        }
-        if (state == 0)  // Added
-        {
-            StopCoroutine(ageEvaluvator);
-        }
-
-
         if(computed == false)
         {
             state = futureState;
@@ -55,20 +38,34 @@ public class CA_Cube_Class_2 : MonoBehaviour {
     // Display behaviour
     void DisplayCube()
     {
-        //MaterialPropertyBlock props = new MaterialPropertyBlock();-edited
-        // MeshRenderer renderer; -edited
+        MaterialPropertyBlock props = new MaterialPropertyBlock();
+         MeshRenderer renderer;
         // If the cell is dead do not show it
         if (state == 0){
             gameObject.GetComponent<MeshRenderer>().enabled = false;
         } else {
             // Else show the cell
             gameObject.GetComponent<MeshRenderer>().enabled = true;
-            //props.SetColor("_Color", Color.white); -edited
+            props.SetColor("_Color", Color.white);
 
-            gameObject.GetComponent<MeshRenderer>().material.color = props; // Added
-            //renderer = gameObject.GetComponent<MeshRenderer>();-edited
-            //renderer.SetPropertyBlock(props); -edited
+            //gameObject.GetComponent<MeshRenderer>().material.color = props; // Added
+            renderer = gameObject.GetComponent<MeshRenderer>();
+            renderer.SetPropertyBlock(props);
         }
+    }
+
+    //Added For time spend alive
+    public void DisplayAge(Color _cubeColor)
+    {
+        // Set the material property block to a colur assigned by the evaluator
+        MaterialPropertyBlock props = new MaterialPropertyBlock();
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        props.SetColor("_Color", _cubeColor);
+
+        // Update the colour of the mesh
+        MeshRenderer renderer;
+        renderer = gameObject.GetComponent<MeshRenderer>();
+        renderer.SetPropertyBlock(props);
     }
 
     // Method to set the futureState variable
@@ -95,16 +92,6 @@ public class CA_Cube_Class_2 : MonoBehaviour {
     // Method to rotate the cube
     public void RotateCube(){
         gameObject.transform.Rotate(new Vector3(0, 45, 0));
-    }
-
-    //Added
-    IEnumerator colorValue()
-    {
-        while (true)
-        {
-            _colorValue =+ 0.7f;
-            yield return _colorValue;
-        }
     }
 
 }
